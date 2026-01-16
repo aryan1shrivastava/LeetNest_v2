@@ -31,11 +31,14 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data.user });
 
       toast.success(res.data.message);
+      return res.data; // Return success data
     } catch (error) {
       console.log("Error signing up", error);
-      toast.error("Error signing up");
+      const errorMessage = error.response?.data?.message || "Error signing up";
+      toast.error(errorMessage);
+      throw error; // Throw error so navigation doesn't happen
     } finally {
-      set({ isSigninUp: false });
+      set({ isSigningUp: false });
     }
   },
 
@@ -47,9 +50,12 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data.user });
 
       toast.success(res.data.message);
+      return res.data; // Return success data
     } catch (error) {
       console.log("Error logging in", error);
-      toast.error("Error logging in");
+      const errorMessage = error.response?.data?.message || "Error logging in";
+      toast.error(errorMessage);
+      throw error; // Throw error so navigation doesn't happen
     } finally {
       set({ isLoggingIn: false });
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const LoginSchema = z.object({
 });
 
 const LoginPage = () => {
-  const { isLoggingIn, login, demoLogin } = useAuthStore();
+  const { isLoggingIn, login, demoLogin, authUser } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -30,11 +30,19 @@ const LoginPage = () => {
     try {
       await login(data);
       console.log("login data", data);
-      navigate("/problems");
+      // Navigation will happen via useEffect when authUser is set
     } catch (error) {
       console.error("Login failed", error);
+      // Don't navigate on error - error is already handled in login function
     }
   };
+
+  // Navigate when authUser is set (after successful login)
+  useEffect(() => {
+    if (authUser) {
+      navigate("/problems");
+    }
+  }, [authUser, navigate]);
 
   return (
     <div className="min-h-screen w-full bg-gray-900">
