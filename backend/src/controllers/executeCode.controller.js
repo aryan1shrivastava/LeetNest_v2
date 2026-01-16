@@ -158,8 +158,24 @@ export const executeCode = async (req, res) => {
     });
   } catch (error) {
     console.error("Execute Code Error:", error);
+    console.error("Error details:", {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      code: error.code,
+    });
+    
+    // Log request details for debugging
+    console.error("Request details:", {
+      hasUser: !!req.user,
+      userId: req.user?.id,
+      bodyKeys: Object.keys(req.body || {}),
+      problemId: req.body?.problemId,
+    });
+    
     return res.status(500).json({
       error: "An error occurred while executing the code",
+      message: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
