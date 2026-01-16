@@ -13,6 +13,8 @@ import { Loader } from "lucide-react";
 import AdminRoute from "./components/AdminRoute";
 import AddProblem from "./page/AddProblem";
 import ChallengePage from "./page/ChallengePage";
+import DiscussPage from "./page/DiscussPage";
+import LeaderboardPage from "./page/LeaderboardPage";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -68,7 +70,7 @@ const App = () => {
         />
         <Route
           path="/signup"
-          element={!authUser ? <SignUpPage /> : <Navigate to={"/login"} />}
+          element={!authUser ? <SignUpPage /> : <Navigate to={"/problems"} />}
         />
 
         {/* Protected Routes with Layout */}
@@ -89,6 +91,14 @@ const App = () => {
           <Route
             path="challenge"
             element={authUser ? <ChallengePage /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="discuss"
+            element={authUser ? <DiscussPage /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="leaderboard"
+            element={authUser ? <LeaderboardPage /> : <Navigate to={"/login"} />}
           />
 
           {/* Admin Routes */}

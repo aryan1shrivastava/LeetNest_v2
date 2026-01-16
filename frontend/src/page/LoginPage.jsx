@@ -30,7 +30,7 @@ const LoginPage = () => {
     try {
       await login(data);
       console.log("login data", data);
-      navigate("/");
+      navigate("/problems");
     } catch (error) {
       console.error("Login failed", error);
     }
