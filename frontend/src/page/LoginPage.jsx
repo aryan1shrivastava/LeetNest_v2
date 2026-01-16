@@ -144,13 +144,25 @@ const LoginPage = () => {
               {/* Demo Login Button */}
               <button
                 type="button"
-                onClick={() => {
-                  demoLogin();
-                  navigate("/problems");
+                onClick={async () => {
+                  try {
+                    await demoLogin();
+                    navigate("/problems");
+                  } catch (error) {
+                    console.error("Demo login failed", error);
+                  }
                 }}
                 className="w-full py-3 px-4 border border-gray-600 hover:border-green-500 text-gray-300 hover:text-green-400 font-medium rounded-lg transition-colors duration-200"
+                disabled={isLoggingIn}
               >
-                Try Demo
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin mr-2 inline" />
+                    Loading...
+                  </>
+                ) : (
+                  "Try Demo"
+                )}
               </button>
             </form>
 

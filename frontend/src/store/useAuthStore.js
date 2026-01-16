@@ -66,4 +66,27 @@ export const useAuthStore = create((set) => ({
       toast.error("Error logging out");
     }
   },
+
+  demoLogin: async () => {
+    set({ isLoggingIn: true });
+    try {
+      // Use demo credentials to login
+      const demoCredentials = {
+        email: "demo@leetnest.com",
+        password: "demo123",
+      };
+
+      const res = await axiosInstance.post("/auth/login", demoCredentials);
+
+      set({ authUser: res.data.user });
+
+      toast.success("Demo login successful");
+    } catch (error) {
+      console.log("Error with demo login", error);
+      // If demo user doesn't exist, show a message
+      toast.error("Demo account not available. Please sign up to create an account.");
+    } finally {
+      set({ isLoggingIn: false });
+    }
+  },
 }));
