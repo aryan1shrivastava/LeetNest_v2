@@ -15,7 +15,12 @@ dotenv.config();
 const app = express();
 
 // CORS configuration
-const corsOrigin = process.env.FRONTEND_URL || "http://localhost:5173";
+// In development, always allow localhost:5173, otherwise use FRONTEND_URL
+const isDevelopment = process.env.NODE_ENV !== "production";
+const corsOrigin = isDevelopment 
+  ? "http://localhost:5173"
+  : (process.env.FRONTEND_URL || "http://localhost:5173");
+
 app.use(
   cors({
     origin: corsOrigin,
@@ -94,6 +99,7 @@ const testDatabaseConnection = async () => {
 };
 
 const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   console.log("Available routes:");

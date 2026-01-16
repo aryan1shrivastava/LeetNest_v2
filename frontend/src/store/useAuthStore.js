@@ -33,8 +33,22 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message);
       return res.data; // Return success data
     } catch (error) {
-      console.log("Error signing up", error);
-      const errorMessage = error.response?.data?.message || "Error signing up";
+      console.error("Error signing up:", error);
+      console.error("Error response:", error.response);
+      
+      let errorMessage = "Error signing up";
+      
+      if (error.response) {
+        // Server responded with error
+        errorMessage = error.response.data?.message || error.response.data?.error || `Server error: ${error.response.status}`;
+      } else if (error.request) {
+        // Request made but no response received
+        errorMessage = "Cannot connect to server. Please check if the backend is running.";
+      } else {
+        // Something else happened
+        errorMessage = error.message || "An unexpected error occurred";
+      }
+      
       toast.error(errorMessage);
       throw error; // Throw error so navigation doesn't happen
     } finally {
@@ -52,8 +66,22 @@ export const useAuthStore = create((set) => ({
       toast.success(res.data.message);
       return res.data; // Return success data
     } catch (error) {
-      console.log("Error logging in", error);
-      const errorMessage = error.response?.data?.message || "Error logging in";
+      console.error("Error logging in:", error);
+      console.error("Error response:", error.response);
+      
+      let errorMessage = "Error logging in";
+      
+      if (error.response) {
+        // Server responded with error
+        errorMessage = error.response.data?.message || error.response.data?.error || `Server error: ${error.response.status}`;
+      } else if (error.request) {
+        // Request made but no response received
+        errorMessage = "Cannot connect to server. Please check if the backend is running.";
+      } else {
+        // Something else happened
+        errorMessage = error.message || "An unexpected error occurred";
+      }
+      
       toast.error(errorMessage);
       throw error; // Throw error so navigation doesn't happen
     } finally {
