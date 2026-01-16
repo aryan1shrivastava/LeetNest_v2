@@ -1,10 +1,25 @@
 import axios from "axios";
 
+// Get backend URL from environment variable or use default
+const getBaseURL = () => {
+  if (import.meta.env.MODE === "development") {
+    return "http://localhost:8080/api/v1";
+  }
+  
+  // In production, use VITE_API_URL if set, otherwise try to infer from current origin
+  // If frontend and backend are on same domain, use relative path
+  // If on different domains, use VITE_API_URL environment variable
+  const apiUrl = import.meta.env.VITE_API_URL;
+  if (apiUrl) {
+    return apiUrl.endsWith('/api/v1') ? apiUrl : `${apiUrl}/api/v1`;
+  }
+  
+  // Fallback: assume same domain (for monorepo deployments)
+  return "/api/v1";
+};
+
 export const axiosInstance = axios.create({
-  baseURL:
-    import.meta.env.MODE === "development"
-      ? "http://localhost:8080/api/v1"
-      : "/api/v1",
+  baseURL: getBaseURL(),
   withCredentials: true,
   timeout: 10000, // 10 second timeout
 });

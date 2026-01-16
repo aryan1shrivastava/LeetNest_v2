@@ -17,9 +17,19 @@ const app = express();
 // CORS configuration
 // In development, always allow localhost:5173, otherwise use FRONTEND_URL
 const isDevelopment = process.env.NODE_ENV !== "production";
-const corsOrigin = isDevelopment 
+let corsOrigin = isDevelopment 
   ? "http://localhost:5173"
   : (process.env.FRONTEND_URL || "http://localhost:5173");
+
+// Remove trailing slash to avoid CORS issues
+if (corsOrigin && corsOrigin.endsWith('/')) {
+  corsOrigin = corsOrigin.slice(0, -1);
+}
+
+// Log CORS configuration for debugging
+console.log("CORS Origin configured:", corsOrigin);
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("FRONTEND_URL from env:", process.env.FRONTEND_URL);
 
 app.use(
   cors({
