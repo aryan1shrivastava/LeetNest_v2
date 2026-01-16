@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Nest shape -->
+  <path d="M16 4C10 4 6 8 6 14C6 20 10 24 16 24C22 24 26 20 26 14C26 8 22 4 16 4Z" fill="#22C55E" fill-opacity="0.1"/>
+  
+  <!-- Code brackets -->
+  <path d="M12 10L8 16L12 22" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20 10L24 16L20 22" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Nest details -->
+  <path d="M16 8C13 8 11 10 11 14C11 18 13 20 16 20C19 20 21 18 21 14C21 10 19 8 16 8Z" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Small decorative elements -->
+  <circle cx="16" cy="14" r="1" fill="#22C55E"/>
+  <path d="M14 12L18 16" stroke="#22C55E" stroke-width="1" stroke-linecap="round"/>
+  <path d="M14 16L18 12" stroke="#22C55E" stroke-width="1" stroke-linecap="round"/>
+</svg> 

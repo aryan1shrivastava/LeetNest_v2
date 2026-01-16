@@ -1,0 +1,4 @@
+{"location":"db.js:5","message":"Prisma init start","data":{"hasGlobalPrisma":false,"hasDbUrl":true},"timestamp":1768561278329,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"db.js:12","message":"Prisma init success","data":{"isNew":true},"timestamp":1768561278332,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"index.js:13","message":"Env vars check","data":{"hasJWT":true,"hasDB":true,"frontendUrl":"https://leetnest-v2.onrender.com/"},"timestamp":1768561278338,"sessionId":"debug-session","runId":"run1","hypothesisId":"E"}
+{"location":"index.js:19","message":"CORS origin config","data":{"corsOrigin":"https://leetnest-v2.onrender.com/","envFrontendUrl":"https://leetnest-v2.onrender.com/"},"timestamp":1768561278338,"sessionId":"debug-session","runId":"run1","hypothesisId":"C"}
