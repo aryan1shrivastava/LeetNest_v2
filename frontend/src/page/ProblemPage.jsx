@@ -123,34 +123,40 @@ const ProblemPage = ({ problemId, isChallenge = false }) => {
     setCode(newCode);
   };
 
+  // Code execution temporarily disabled
+  // const handleRunCode = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const language_id = getLanguageId(selectedLanguage);
+  //     const stdin = problem.testcases.map((tc) => tc.input);
+  //     const expected_outputs = problem.testcases.map((tc) => tc.output);
+  //     const result = await executeCode(
+  //       code,
+  //       language_id,
+  //       stdin,
+  //       expected_outputs,
+  //       id
+  //     );
+
+  //     if (isChallenge) {
+  //       if (result?.status === "success") {
+  //         toast.success("Challenge completed successfully!");
+  //         navigate("/problems");
+  //       } else {
+  //         toast.error("Some test cases failed. Try again!");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error executing code", error);
+  //     if (isChallenge) {
+  //       toast.error("Error executing code. Please try again.");
+  //     }
+  //   }
+  // };
+  
   const handleRunCode = async (e) => {
     e.preventDefault();
-    try {
-      const language_id = getLanguageId(selectedLanguage);
-      const stdin = problem.testcases.map((tc) => tc.input);
-      const expected_outputs = problem.testcases.map((tc) => tc.output);
-      const result = await executeCode(
-        code,
-        language_id,
-        stdin,
-        expected_outputs,
-        id
-      );
-
-      if (isChallenge) {
-        if (result?.status === "success") {
-          toast.success("Challenge completed successfully!");
-          navigate("/problems");
-        } else {
-          toast.error("Some test cases failed. Try again!");
-        }
-      }
-    } catch (error) {
-      console.log("Error executing code", error);
-      if (isChallenge) {
-        toast.error("Error executing code. Please try again.");
-      }
-    }
+    toast.error("Code execution is temporarily disabled. Please check back soon!");
   };
 
   const handleGiveUp = () => {
@@ -426,7 +432,8 @@ const ProblemPage = ({ problemId, isChallenge = false }) => {
                   <option value="cpp">C++</option>
                   <option value="javascript">JavaScript</option>
                 </select>
-                <button
+                {/* Code execution temporarily disabled */}
+                {/* <button
                   onClick={handleRunCode}
                   disabled={isExecuting}
                   className="btn btn-success gap-2"
@@ -442,7 +449,24 @@ const ProblemPage = ({ problemId, isChallenge = false }) => {
                       Submit
                     </>
                   )}
-                </button>
+                </button> */}
+              </div>
+              
+              {/* Code Execution Disabled Notice */}
+              <div className="bg-yellow-900/20 border border-yellow-600/50 rounded-lg p-4 flex items-start gap-3">
+                <div className="flex-shrink-0 mt-0.5">
+                  <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-yellow-400 font-semibold mb-1">Code Execution Temporarily Disabled</h3>
+                  <p className="text-gray-300 text-sm">
+                    We're currently working on improving our code execution service. 
+                    Code submission and testing features will be back online soon. 
+                    Thank you for your patience!
+                  </p>
+                </div>
               </div>
 
               <div className="h-[600px] border border-gray-700 rounded-lg overflow-hidden">
