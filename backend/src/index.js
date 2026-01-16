@@ -8,6 +8,7 @@ import executionRoutes from "./routes/executeCode.routes.js";
 import submissionRoutes from "./routes/submission.routes.js";
 import playlistRoutes from "./routes/playlist.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import { db } from "./libs/db.js";
 
 dotenv.config();
 
@@ -74,11 +75,32 @@ app.use((req, res) => {
   });
 });
 
+// Test database connection on startup
+const testDatabaseConnection = async () => {
+  try {
+    await db.$connect();
+    console.log("✅ Database connection successful");
+    
+    // Try a simple query to verify tables exist
+    const userCount = await db.user.count();
+    console.log(`✅ Database tables accessible. Current user count: ${userCount}`);
+  } catch (error) {
+    console.error("❌ Database connection failed:", error.message);
+    console.error("Error details:", {
+      code: error.code,
+      meta: error.meta,
+    });
+  }
+};
+
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   console.log("Available routes:");
   console.log("- GET /health");
   console.log("- GET /api/v1/users/activity");
   console.log("- GET /api/v1/users/stats");
+  
+  // Test database connection
+  await testDatabaseConnection();
 });

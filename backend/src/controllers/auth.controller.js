@@ -6,16 +6,26 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   const { email, password, name } = req.body;
 
+  console.log("Register request received:", { email, name: name?.substring(0, 3) + "***" });
+
   try {
+    // Test database connection first
+    await db.$connect();
+    console.log("Database connection successful");
+
     const existingUser = await db.user.findUnique({
       where: { email },
     });
 
     if (existingUser) {
+      console.log("User already exists:", email);
       return res.status(400).json({ message: "User already exists" });
     }
 
+    console.log("Hashing password...");
     const hashedPassword = await bcrypt.hash(password, 10);
+    
+    console.log("Creating user in database...");
     const newUser = await db.user.create({
       data: {
         email,
@@ -24,6 +34,8 @@ export const register = async (req, res) => {
         role: UserRole.USER,
       },
     });
+    
+    console.log("User created successfully:", { id: newUser.id, email: newUser.email });
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -51,7 +63,16 @@ export const register = async (req, res) => {
     });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ message: "Error creating user" });
+    console.error("Error details:", {
+      message: error.message,
+      code: error.code,
+      meta: error.meta,
+      stack: error.stack,
+    });
+    res.status(500).json({ 
+      message: "Error creating user",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
   }
 };
 
